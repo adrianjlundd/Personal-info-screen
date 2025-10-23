@@ -20,7 +20,7 @@ class PersonalInfoApp:
     def setup_gui(self):
         self.root = tk.Tk()
         self.root.title("Personal Dashboard")
-        self.root.configure(bg='#1a1a1a')
+        self.root.configure(bg="#7377a1")
         self.root.attributes('-fullscreen', True)
         
         # Main grid layout
@@ -34,7 +34,7 @@ class PersonalInfoApp:
             text="", 
             font=("Helvetica", 28, "bold"),
             fg='#ffffff',
-            bg='#1a1a1a'
+            bg="#475ec2"
         )
         self.datetime_label.grid(row=0, column=0, columnspan=2, pady=(20, 30), sticky='ew')
         

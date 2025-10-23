@@ -40,7 +40,7 @@ class BusFetcher:
             data = response.json()
             
             # Debug: print raw data
-            print("Raw bus data:", json.dumps(data, indent=2)[:500] + "...")
+            #print("Raw bus data:", json.dumps(data, indent=2)[:500] + "...")
             
             stop = data["data"]["stopPlace"]
             if not stop or "estimatedCalls" not in stop:
