@@ -14,7 +14,7 @@ A personal dashboard for displaying upcoming calendar events, bus departures, an
 2. Run `app.py` to start the dashboard.
 
 
-
+![alt text](image.png)
 
 
 
