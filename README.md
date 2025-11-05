@@ -17,5 +17,8 @@ A personal dashboard for displaying upcoming calendar events, bus departures, an
 ![alt text](image.png)
 
 
+remember to refresh tokens
+
+
 
 https://developers.google.com/workspace/calendar/api/quickstart/python
