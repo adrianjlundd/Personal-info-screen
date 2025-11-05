@@ -3,6 +3,9 @@ from datetime import datetime
 from calendar_fetch import CalendarFetcher
 from bus_frame import BusFetcher
 from weather_frame import WeatherFetcher
+import locale
+locale.setlocale(locale.LC_TIME, "nb_NO.UTF-8")
+
 
 class PersonalInfoApp:
     def __init__(self):
@@ -189,7 +192,7 @@ class PersonalInfoApp:
 
     def update_datetime(self):
         now = datetime.now()
-        datetime_str = now.strftime("%A %d. %B %Y   %H:%M:%S")
+        datetime_str = now.strftime("%A %d. %B %Y   %H:%M:%S").capitalize()
         self.datetime_label.config(text=datetime_str)
         self.root.after(1000, self.update_datetime)
 
