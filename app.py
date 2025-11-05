@@ -3,8 +3,7 @@ from datetime import datetime
 from calendar_fetch import CalendarFetcher
 from bus_frame import BusFetcher
 from weather_frame import WeatherFetcher
-import locale
-locale.setlocale(locale.LC_TIME, "nb_NO.UTF-8")
+
 
 
 class PersonalInfoApp:
@@ -192,9 +191,23 @@ class PersonalInfoApp:
 
     def update_datetime(self):
         now = datetime.now()
-        datetime_str = now.strftime("%A %d. %B %Y   %H:%M:%S").capitalize()
+    
+        # Manuelle norske navn (store forbokstaver)
+        norwegian_days = [
+            "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"
+        ]
+        norwegian_months = [
+            "januar", "februar", "mars", "april", "mai", "juni",
+            "juli", "august", "september", "oktober", "november", "desember"
+        ]
+    
+        weekday = norwegian_days[now.weekday()]         # 0 = mandag
+        month = norwegian_months[now.month - 1]
+    
+        datetime_str = f"{weekday} {now.day}. {month} {now.year}   {now:%H:%M:%S}"
         self.datetime_label.config(text=datetime_str)
         self.root.after(1000, self.update_datetime)
+
 
     def update_calendar(self):
         self.calendar_listbox.delete(0, tk.END)
