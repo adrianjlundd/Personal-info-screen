@@ -16,13 +16,24 @@ class CalendarFetcher:
         self.service = None
         self._load_service()
     
+    from google.auth.transport.requests import Request
+
     def _load_service(self):
-        """Laster inn Google Calendar service fra token."""
+        """Laster inn Google Calendar service fra token, med automatisk refresh."""
         try:
             self.creds = Credentials.from_authorized_user_file(self.token_file, SCOPES)
+            
+            # Refresh access token hvis den er utløpt
+            if self.creds and self.creds.expired and self.creds.refresh_token:
+                self.creds.refresh(Request())
+                # Lagre oppdatert token tilbake til filen
+                with open(self.token_file, 'w') as token:
+                    token.write(self.creds.to_json())
+    
             self.service = build('calendar', 'v3', credentials=self.creds)
         except Exception as e:
             print(f"[CalendarFetcher] Feil ved lasting av {self.token_file}: {e}")
+
     
     def list_upcoming_events(self, days=2):
         """Returnerer hendelser i dag og neste <days> dager fra ALLE kalendere."""
