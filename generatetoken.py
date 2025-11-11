@@ -17,7 +17,7 @@ if not creds or not creds.valid:
             'credentials.json', SCOPES)
         creds = flow.run_local_server(port=0)
     # Lagre token for senere bruk
-    with open('token_samf.json', 'w') as token:
+    with open('token_abakus.json', 'w') as token:
         token.write(creds.to_json())
 
 print("Tokens oppdatert!")
