@@ -3,6 +3,7 @@ from datetime import datetime
 from calendar_fetch import CalendarFetcher
 from bus_frame import BusFetcher
 from weather_frame import WeatherFetcher
+from datetime import datetime, timedelta
 
 
 
@@ -209,23 +210,65 @@ class PersonalInfoApp:
         self.root.after(1000, self.update_datetime)
 
 
+    
+
     def update_calendar(self):
         self.calendar_listbox.delete(0, tk.END)
         try:
             all_events = []
             for fetcher in self.calendar_fetchers:
-                events = fetcher.list_upcoming_events(days=2)
+                events = fetcher.list_upcoming_events(days=3)  # hent litt mer fremover
                 if events:
                     all_events.extend(events)
             all_events.sort()
-            for event in all_events[:15]:
-                self.calendar_listbox.insert(tk.END, event)
+
             if not all_events:
-                self.calendar_listbox.insert(tk.END, "Ingen events de neste 2 dagene")
+                self.calendar_listbox.insert(tk.END, "Ingen events de neste dagene")
+            else:
+                today = datetime.now().date()
+                tomorrow = today + timedelta(days=1)
+                day_after_tomorrow = today + timedelta(days=2)
+
+                # Grupper etter dag
+                def header(text):
+                    self.calendar_listbox.insert(tk.END, "")
+                    self.calendar_listbox.insert(tk.END, f"── {text} ──")
+
+                added_today = added_tomorrow = added_day_after = False
+
+                for event in all_events[:20]:  # vis maks 20
+                    # antatt at event begynner med datoformat "YYYY-MM-DD HH:MM ..." eller lignende
+                    event_date_str = event.split()[0]
+                    try:
+                        event_date = datetime.fromisoformat(event_date_str).date()
+                    except ValueError:
+                        # fallback hvis CalendarFetcher gir annen streng
+                        event_date = today
+
+                    if event_date == today:
+                        if not added_today:
+                            header("I DAG")
+                            added_today = True
+                        self.calendar_listbox.insert(tk.END, event)
+                    elif event_date == tomorrow:
+                        if not added_tomorrow:
+                            header("I MORGEN")
+                            added_tomorrow = True
+                        self.calendar_listbox.insert(tk.END, event)
+                    elif event_date == day_after_tomorrow:
+                        if not added_day_after:
+                            header("I OVERIMORGEN")
+                            added_day_after = True
+                        self.calendar_listbox.insert(tk.END, event)
+                    else:
+                        self.calendar_listbox.insert(tk.END, event)
+
         except Exception as e:
             print(f"Calendar update error: {e}")
             self.calendar_listbox.insert(tk.END, "Feil ved henting av kalender")
+
         self.root.after(300000, self.update_calendar)  # 5 min
+
 
     def update_buses(self):
         self.bus_listbox.delete(0, tk.END)
