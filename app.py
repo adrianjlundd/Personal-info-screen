@@ -96,7 +96,7 @@ class PersonalInfoApp:
             highlightthickness=0,
             height=20
         )
-        self.calendar_listbox.pack(fill="both", expand=True, padx=10, pady=10)
+        self.calendar_listbox.pack(fill="both", expand=True, padx=30, pady=10)
 
         # === HØYRE SIDE ===
         self.right_frame = tk.Frame(self.root)
@@ -115,7 +115,7 @@ class PersonalInfoApp:
             highlightthickness=0,
             height=8
         )
-        self.bus_listbox.pack(fill="x", padx=10)
+        self.bus_listbox.pack(fill="x", padx=40, pady=15)
 
         # VÆR
         self.weather_frame = tk.Frame(self.right_frame)
@@ -237,7 +237,7 @@ class PersonalInfoApp:
                 added_today = added_tomorrow = added_day_after = False
 
                 for event in all_events[:20]:  # vis maks 20
-                    # antatt at event begynner med datoformat "YYYY-MM-DD HH:MM ..." eller lignende
+                    
                     event_date_str = event.split()[0]
                     try:
                         event_date = datetime.fromisoformat(event_date_str).date()
