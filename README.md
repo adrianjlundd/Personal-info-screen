@@ -26,3 +26,6 @@ https://developers.google.com/workspace/calendar/api/quickstart/python
 
 
 https://console.cloud.google.com/auth/audience
+
+
+gota update this README soon
