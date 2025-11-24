@@ -42,7 +42,8 @@ class CalendarFetcher:
             return ["(Feil: mangler Google Calendar-tilkobling)"]
 
         try:
-            now = datetime.datetime.now(datetime.UTC)
+            # Use timezone-aware UTC now
+            now = datetime.datetime.now(datetime.timezone.utc)
             time_min = now.isoformat()
             time_max = (now + datetime.timedelta(days=days)).isoformat()
 
@@ -85,7 +86,9 @@ class CalendarFetcher:
                         dt_local = dt.astimezone(LOCAL_TZ)
                         tid = dt_local.strftime("%Y-%m-%d %H:%M")
                     else:
-                        tid = "Hele dagen"
+                        # start is a date-only string for all-day events (YYYY-MM-DD)
+                        # Prefix with the ISO date so the caller can parse/group by date.
+                        tid = f"{start} Hele dagen"
                     formatted_events.append(f"{tid} {title.strip()}")
                 except Exception:
                     formatted_events.append(f"{start} {title.strip()}")
