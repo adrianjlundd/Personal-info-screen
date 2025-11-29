@@ -67,10 +67,12 @@ class CalendarFetcher:
                     start = event['start'].get('dateTime', event['start'].get('date'))
                     title = event.get('summary', '(uten tittel)')
 
-                    # Fjern slike "NTNU TimeEdit"-kalendernavn
-                    clean_cal_name = re.sub(r"\[TMA\d{4}[^]]*\]\s*", "", f"[{cal_name}] ")
+                    # Fjern alt som står i [brackets] (f.eks. kalendernavn som vises i tittelen)
+                    combined = f"[{cal_name}] {title}"
+                    # Fjern alle bracketed-segmenter, inkl. ledende mellomrom
+                    display_title = re.sub(r"\[[^\]]+\]\s*", "", combined).strip()
 
-                    all_events.append((start, f"{clean_cal_name}{title}"))
+                    all_events.append((start, display_title))
 
             if not all_events:
                 return []
