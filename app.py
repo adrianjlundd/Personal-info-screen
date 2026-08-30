@@ -11,7 +11,7 @@ class PersonalInfoApp:
     def __init__(self):
         self.calendar_fetchers = [
             CalendarFetcher('token_privat.json'),
-            CalendarFetcher('token_samf.json'),
+            CalendarFetcher('token_xcom.json'),
             CalendarFetcher('token_abakus.json')
         ]
         self.bus_fetcher = BusFetcher(stop_id="NSR:StopPlace:43133")

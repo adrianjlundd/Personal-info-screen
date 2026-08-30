@@ -7,8 +7,8 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 creds = None
-if os.path.exists('token.json'):
-    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+if os.path.exists('token_xcom.json'):
+    creds = Credentials.from_authorized_user_file('token_xcom.json', SCOPES)
 if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
         creds.refresh(Request())
@@ -17,7 +17,7 @@ if not creds or not creds.valid:
             'credentials.json', SCOPES)
         creds = flow.run_local_server(port=0)
     # Lagre token for senere bruk
-    with open('token_abakus.json', 'w') as token:
+    with open('token_xcom.json', 'w') as token:
         token.write(creds.to_json())
 
 print("Tokens oppdatert!")
